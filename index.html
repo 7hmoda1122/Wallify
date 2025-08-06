@@ -1,0 +1,3569 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallify - معرض الخلفيات المتميز</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --primary-color: #6C5CE7;
+            --secondary-color: #A29BFE;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-light: #777777;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --sidebar-width: 280px;
+            --pro-color: #FF8A00;
+            --like-color: #FF4757;
+            --premium-price-color: #FFD700;
+        }
+        
+        .dark-mode {
+            --background-color: #1A1A2E;
+            --card-bg: #16213E;
+            --text-color: #E6E6E6;
+            --text-light: #AAAAAA;
+            --shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px;
+            transition: var(--transition);
+        }
+        
+        /* Header Styles */
+        .header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background-color: var(--background-color);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 18px;
+            transition: var(--transition);
+        }
+        
+        .control-btn:hover {
+            background-color: rgba(0,0,0,0.05);
+            transform: scale(1.1);
+        }
+        
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .menu-line {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+        
+        .menu-btn.active .menu-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .menu-btn.active .menu-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-btn.active .menu-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            color: var(--text-color);
+            padding-right: 45px;
+            transition: var(--transition);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--card-bg);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .menu-item {
+            margin-bottom: 10px;
+        }
+        
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .menu-link:hover, .menu-link.active {
+            background-color: rgba(108, 92, 231, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .menu-icon {
+            margin-left: 10px;
+            font-size: 20px;
+        }
+        
+        .pro-badge {
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .language-selector {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .language-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .language-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .language-option {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .language-option.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Overlay for sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 20px 0 60px;
+            transition: var(--transition);
+        }
+        
+        .sidebar-active .main-content,
+        .sidebar-active .header {
+            transform: translateX(calc(var(--sidebar-width) * -1));
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 15px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-bottom: 20px;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .categories::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .categories-container {
+            display: inline-flex;
+            gap: 10px;
+        }
+        
+        .category-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: none;
+            background: rgba(0,0,0,0.05);
+            color: var(--text-color);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+        
+        /* Wallpaper Grid */
+        .wallpaper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 10px 0;
+        }
+        
+        .wallpaper-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            aspect-ratio: 9/16;
+            transition: var(--transition);
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+        }
+        
+        .wallpaper-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .wallpaper-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+        
+        .wallpaper-img.loaded {
+            opacity: 1;
+        }
+        
+        .wallpaper-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 15px;
+            opacity: 0;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .wallpaper-item:hover .wallpaper-overlay {
+            opacity: 1;
+        }
+        
+        .wallpaper-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .wallpaper-category {
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .wallpaper-price {
+            font-size: 12px;
+            color: var(--premium-price-color);
+            font-weight: bold;
+            margin-top: 3px;
+        }
+        
+        .wallpaper-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .wallpaper-item:hover .wallpaper-actions {
+            opacity: 1;
+        }
+        
+        .action-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .pro-action-btn {
+            background: rgba(255,138,0,0.9);
+            color: white;
+        }
+        
+        .like-btn {
+            background: rgba(255, 71, 87, 0.9);
+            color: white;
+        }
+        
+        .like-btn.liked {
+            background: var(--like-color);
+            color: white;
+        }
+        
+        .rating-container {
+            display: flex;
+            gap: 3px;
+            margin-top: 5px;
+        }
+        
+        .rating-star {
+            color: #FFD700;
+            font-size: 12px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--card-bg);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .modal-img-container {
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .modal-info {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .modal-price {
+            font-size: 14px;
+            color: var(--premium-price-color);
+            font-weight: bold;
+            margin-top: 3px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .modal-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .modal-btn:hover {
+            background: #5649c0;
+            transform: translateY(-2px);
+        }
+        
+        .pro-modal-btn {
+            background: var(--pro-color);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-close:hover {
+            background: rgba(0,0,0,0.7);
+            transform: rotate(90deg);
+        }
+        
+        /* Floating Button */
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(108, 92, 231, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .floating-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.6);
+        }
+        
+        /* Loader */
+        .loader {
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(108, 92, 231, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            z-index: 2000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s ease;
+        }
+        
+        .notification.fade-out {
+            animation: slideUp 0.3s ease;
+        }
+        
+        .pro-notification {
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(0); opacity: 1; }
+            to { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+        }
+        
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .auth-modal.active {
+            display: flex;
+        }
+        
+        .auth-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+            position: relative;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .auth-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .auth-subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-input {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-family: 'Cairo', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+        }
+        
+        .auth-btn {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        
+        .auth-btn:hover {
+            background: #5649c0;
+        }
+        
+        .pro-btn {
+            background: var(--pro-color);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .auth-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+        
+        .auth-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: var(--text-color);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .auth-close:hover {
+            background: rgba(0,0,0,0.2);
+        }
+        
+        /* Tabs */
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+        }
+        
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        /* User Profile in Sidebar */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .user-email {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .user-pro-badge {
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Pro Features */
+        .pro-feature {
+            position: relative;
+        }
+        
+        .pro-feature::after {
+            content: 'PRO';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        /* Subscription Modal */
+        .subscription-plans {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .plan-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .plan-card.pro {
+            border: 2px solid var(--pro-color);
+        }
+        
+        .plan-card.pro::before {
+            content: 'الأفضل';
+            position: absolute;
+            top: 10px;
+            left: -25px;
+            background: var(--pro-color);
+            color: white;
+            padding: 3px 30px;
+            transform: rotate(-45deg);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .plan-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .plan-price {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .plan-price.pro {
+            color: var(--pro-color);
+        }
+        
+        .plan-period {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .plan-feature {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .plan-feature::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .plan-feature.pro::before {
+            color: var(--pro-color);
+        }
+        
+        .plan-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .plan-btn.pro {
+            background: var(--pro-color);
+        }
+        
+        .plan-btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* Payment Form */
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-method {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background: rgba(108, 92, 231, 0.1);
+        }
+        
+        .payment-method-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .wallpaper-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            
+            .header-content {
+                padding: 0 15px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .search-container {
+                margin: 15px auto;
+            }
+            
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .sidebar {
+                width: 85%;
+                right: -85%;
+            }
+            
+            .sidebar-active .main-content,
+            .sidebar-active .header {
+                transform: translateX(calc(-85%));
+            }
+            
+            .subscription-plans {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .wallpaper-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
+            }
+            
+            .wallpaper-overlay {
+                padding: 10px;
+            }
+            
+            .wallpaper-title {
+                font-size: 12px;
+            }
+            
+            .wallpaper-category {
+                font-size: 10px;
+            }
+            
+            .action-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+            
+            .auth-content {
+                padding: 20px;
+            }
+        }
+        
+        /* Animation for wallpaper items */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .wallpaper-item {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        /* Shine effect on hover */
+        .wallpaper-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: none;
+        }
+        
+        .wallpaper-item:hover::after {
+            left: 100%;
+            transition: left 0.7s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">القائمة</h3>
+            <button class="sidebar-close" id="sidebarClose">×</button>
+        </div>
+        
+        <div id="userProfileSection" style="display: none;">
+            <div class="user-profile">
+                <div class="user-avatar" id="userAvatar">H</div>
+                <div class="user-info">
+                    <div class="user-name">
+                        <span id="userName">حساب المطور</span>
+                        <span class="user-pro-badge" id="userProBadge" style="display: inline-block;">PRO</span>
+                    </div>
+                    <div class="user-email" id="userEmail">2h7amoda2@gmail.com</div>
+                </div>
+            </div>
+        </div>
+        
+        <ul class="sidebar-menu" id="sidebarMenu">
+            <li class="menu-item" id="loginMenuItem" style="display: none;">
+                <a href="#" class="menu-link" id="loginBtn">
+                    <span class="menu-icon">👤</span>
+                    <span>تسجيل الدخول</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link" id="proBtn">
+                    <span class="pro-badge">PRO</span>
+                    <span class="menu-icon">⭐</span>
+                    <span>الاشتراك المميز</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <span class="menu-icon">⚙️</span>
+                    <span>الإعدادات</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <span class="menu-icon">📱</span>
+                    <span>تطبيق الجوال</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <span class="menu-icon">💬</span>
+                    <span>الدعم الفني</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <span class="menu-icon">ℹ️</span>
+                    <span>حول التطبيق</span>
+                </a>
+            </li>
+            <li class="menu-item" id="logoutMenuItem">
+                <a href="#" class="menu-link" id="logoutBtn">
+                    <span class="menu-icon">🚪</span>
+                    <span>تسجيل الخروج</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="language-selector">
+            <h4 class="language-title">اللغة</h4>
+            <div class="language-options">
+                <div class="language-option active">العربية</div>
+                <div class="language-option">English</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-content">
+            <button class="auth-close" id="authClose">×</button>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="loginTab">تسجيل الدخول</div>
+                <div class="auth-tab" id="registerTab">إنشاء حساب</div>
+            </div>
+            
+            <div id="loginFormContainer">
+                <div class="auth-header">
+                    <h2 class="auth-title">تسجيل الدخول</h2>
+                    <p class="auth-subtitle">سجل دخولك للوصول إلى جميع الميزات</p>
+                </div>
+                
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">البريد الإلكتروني</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="أدخل بريدك الإلكتروني" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">كلمة المرور</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="أدخل كلمة المرور" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn">تسجيل الدخول</button>
+                </form>
+                
+                <div class="auth-footer">
+                    ليس لديك حساب؟ <a href="#" class="auth-link" id="showRegister">إنشاء حساب</a>
+                </div>
+            </div>
+            
+            <div id="registerFormContainer" style="display: none;">
+                <div class="auth-header">
+                    <h2 class="auth-title">إنشاء حساب</h2>
+                    <p class="auth-subtitle">انضم إلينا واستمتع بتجربة رائعة</p>
+                </div>
+                
+                <form class="auth-form" id="registerForm">
+                    <div class="form-group">
+                        <label for="registerName" class="form-label">الاسم الكامل</label>
+                        <input type="text" id="registerName" class="form-input" placeholder="أدخل اسمك الكامل" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail" class="form-label">البريد الإلكتروني</label>
+                        <input type="email" id="registerEmail" class="form-input" placeholder="أدخل بريدك الإلكتروني" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword" class="form-label">كلمة المرور</label>
+                        <input type="password" id="registerPassword" class="form-input" placeholder="أدخل كلمة المرور" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerConfirmPassword" class="form-label">تأكيد كلمة المرور</label>
+                        <input type="password" id="registerConfirmPassword" class="form-input" placeholder="أعد إدخال كلمة المرور" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn">إنشاء حساب</button>
+                </form>
+                
+                <div class="auth-footer">
+                    لديك حساب بالفعل؟ <a href="#" class="auth-link" id="showLogin">تسجيل الدخول</a>
+                </div>
+            </div>
+            
+            <div id="proSubscriptionContainer" style="display: none;">
+                <div class="auth-header">
+                    <h2 class="auth-title">الاشتراك المميز</h2>
+                    <p class="auth-subtitle">قم بترقية حسابك واستمتع بميزات حصرية</p>
+                </div>
+                
+                <div class="subscription-plans">
+                    <div class="plan-card">
+                        <h3 class="plan-name">الاشتراك الأساسي</h3>
+                        <div class="plan-price">مجاني</div>
+                        <div class="plan-period">مدى الحياة</div>
+                        
+                        <ul class="plan-features">
+                            <li class="plan-feature">وصول إلى 100+ خلفية</li>
+                            <li class="plan-feature">تحميل 5 خلفيات يومياً</li>
+                            <li class="plan-feature">دعم فني أساسي</li>
+                        </ul>
+                        
+                        <button class="plan-btn" disabled>حسابك الحالي</button>
+                    </div>
+                    
+                    <div class="plan-card pro">
+                        <h3 class="plan-name">الاشتراك المميز</h3>
+                        <div class="plan-price pro">$4.99</div>
+                        <div class="plan-period">شهرياً</div>
+                        
+                        <ul class="plan-features">
+                            <li class="plan-feature pro">وصول غير محدود إلى جميع الخلفيات</li>
+                            <li class="plan-feature pro">تحميل غير محدود</li>
+                            <li class="plan-feature pro">خلفيات حصرية</li>
+                            <li class="plan-feature pro">دعم فني مميز</li>
+                            <li class="plan-feature pro">إزالة الإعلانات</li>
+                        </ul>
+                        
+                        <button class="plan-btn pro" id="subscribeBtn">ترقية الآن</button>
+                    </div>
+                </div>
+                
+                <div id="paymentFormContainer" style="display: none;">
+                    <div class="auth-header">
+                        <h2 class="auth-title">الدفع</h2>
+                        <p class="auth-subtitle">أكمل عملية الدفع لتفعيل الاشتراك</p>
+                    </div>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method active">
+                            <div class="payment-method-icon">💳</div>
+                            <div>بطاقة ائتمان</div>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-method-icon">📱</div>
+                            <div>محفظة إلكترونية</div>
+                        </div>
+                    </div>
+                    
+                    <form class="payment-form" id="paymentForm">
+                        <div class="form-group">
+                            <label for="cardNumber" class="form-label">رقم البطاقة</label>
+                            <input type="text" id="cardNumber" class="form-input" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardExpiry" class="form-label">تاريخ الانتهاء</label>
+                            <input type="text" id="cardExpiry" class="form-input" placeholder="MM/YY" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardCvc" class="form-label">رمز الأمان (CVC)</label>
+                            <input type="text" id="cardCvc" class="form-input" placeholder="123" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardName" class="form-label">اسم حامل البطاقة</label>
+                            <input type="text" id="cardName" class="form-input" placeholder="اسمك كما هو على البطاقة" required>
+                        </div>
+                        
+                        <button type="submit" class="auth-btn pro-btn">دفع $4.99</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" id="mainContainer">
+        <header class="header">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🎨</span>
+                    <span>Wallify</span>
+                </a>
+                <div class="header-controls">
+                    <button class="control-btn" id="darkModeToggle">🌙</button>
+                    <button class="control-btn" id="searchToggle">🔍</button>
+                    <div class="menu-btn" id="menuBtn">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-container" id="searchContainer">
+                <input type="text" class="search-box" placeholder="ابحث عن خلفيات..." id="searchInput">
+                <span class="search-icon">🔍</span>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <!-- Categories -->
+            <div class="categories">
+                <div class="categories-container" id="categoriesContainer">
+                    <button class="category-btn active" data-category="all">الكل</button>
+                    <button class="category-btn" data-category="anime">أنمي</button>
+                    <button class="category-btn" data-category="nature">طبيعة</button>
+                    <button class="category-btn" data-category="cars">سيارات</button>
+                    <button class="category-btn" data-category="space">فضاء</button>
+                    <button class="category-btn" data-category="abstract">تجريدية</button>
+                    <button class="category-btn" data-category="animals">حيوانات</button>
+                    <button class="category-btn" data-category="games">ألعاب</button>
+                    <button class="category-btn" data-category="art">فن</button>
+                    <button class="category-btn pro-feature" data-category="premium">المميزة</button>
+                </div>
+            </div>
+            
+            <div class="wallpaper-grid" id="wallpaperGrid">
+                <!-- Wallpapers will be loaded here -->
+            </div>
+            
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+            </div>
+            
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">🖼️</div>
+                <h3>لا توجد خلفيات متاحة</h3>
+                <p>حاول البحث باستخدام كلمات مختلفة</p>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal for full view -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">×</button>
+            <div class="modal-img-container">
+                <img src="" class="modal-img" id="modalImg" alt="">
+            </div>
+            <div class="modal-info">
+                <div>
+                    <div class="modal-title" id="modalTitle"></div>
+                    <div class="modal-price" id="modalPrice" style="display: none;"></div>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn" id="downloadBtn">
+                        <span>تحميل</span>
+                        <span>⬇</span>
+                    </button>
+                    <button class="modal-btn pro-modal-btn" id="setWallpaperBtn">
+                        <span>تعيين</span>
+                        <span>🖼️</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="floating-btn" id="scrollTopBtn">↑</button>
+    
+    <script>
+        // Sample wallpapers data with Anime section
+        const wallpapers = [
+            // Anime Wallpapers (20 items)
+            { 
+                id: 101,
+                title: "ناروتو شيبودن",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp4923981.jpg",
+                color: "#FF7F11",
+                likes: 124,
+                rating: 4.5,
+                liked: true
+            },
+            { 
+                id: 102,
+                title: "هجوم العمالقة",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp4782017.jpg",
+                color: "#1A1A1D",
+                likes: 98,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 103,
+                title: "ون بيس",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415518.jpg",
+                color: "#D4AF37",
+                likes: 156,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 104,
+                title: "ديمون سلاير",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp5944779.jpg",
+                color: "#000000",
+                likes: 87,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 105,
+                title: "أبطال الكرة",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415520.jpg",
+                color: "#1E90FF",
+                likes: 65,
+                rating: 3.9,
+                liked: false
+            },
+            { 
+                id: 106,
+                title: "دراغون بول",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415524.jpg",
+                color: "#FFD700",
+                likes: 112,
+                rating: 4.4,
+                liked: true
+            },
+            { 
+                id: 107,
+                title: "بليتش",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415526.jpg",
+                color: "#00008B",
+                likes: 78,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 108,
+                title: "المحقق كونان",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415529.jpg",
+                color: "#1E90FF",
+                likes: 92,
+                rating: 4.0,
+                liked: false
+            },
+            { 
+                id: 109,
+                title: "سيلور مون",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415532.jpg",
+                color: "#9370DB",
+                likes: 103,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 110,
+                title: "ميراي نيكي",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415535.jpg",
+                color: "#FF1493",
+                likes: 45,
+                rating: 3.8,
+                liked: false
+            },
+            { 
+                id: 111,
+                title: "فاينل فانتسي",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415538.jpg",
+                color: "#4169E1",
+                likes: 67,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 112,
+                title: "كيميتسو نو يايبا",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415541.jpg",
+                color: "#DC143C",
+                likes: 134,
+                rating: 4.8,
+                liked: true
+            },
+            { 
+                id: 113,
+                title: "هانتر x هانتر",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415544.jpg",
+                color: "#FF8C00",
+                likes: 89,
+                rating: 4.5,
+                liked: false
+            },
+            { 
+                id: 114,
+                title: "فايري تايل",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415547.jpg",
+                color: "#00BFFF",
+                likes: 76,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 115,
+                title: "بلاك كلوفر",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415550.jpg",
+                color: "#228B22",
+                likes: 82,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 116,
+                title: "سورد آرت أونلاين",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415553.jpg",
+                color: "#9932CC",
+                likes: 95,
+                rating: 4.4,
+                liked: true
+            },
+            { 
+                id: 117,
+                title: "نو غيم نو لايف",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415556.jpg",
+                color: "#FF69B4",
+                likes: 68,
+                rating: 4.0,
+                liked: false
+            },
+            { 
+                id: 118,
+                title: "ري:زيرو",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415559.jpg",
+                color: "#4682B4",
+                likes: 107,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 119,
+                title: "أكاديمية الأبطال",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415562.jpg",
+                color: "#FF0000",
+                likes: 113,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 120,
+                title: "أبطال الديجيتال",
+                category: "anime",
+                imageUrl: "https://wallpapercave.com/wp/wp9415565.jpg",
+                color: "#00CED1",
+                likes: 72,
+                rating: 4.2,
+                liked: false
+            },
+            
+            // Nature Wallpapers (20 items)
+            { 
+                id: 201,
+                title: "جبال شامخة",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#4a6fa5",
+                likes: 89,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 202,
+                title: "غابة خضراء",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3a5e3a",
+                likes: 76,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 203,
+                title: "شاطئ هادئ",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f5d76e",
+                likes: 68,
+                rating: 3.9,
+                liked: false
+            },
+            { 
+                id: 204,
+                title: "صحراء واسعة",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e67e22",
+                likes: 54,
+                rating: 3.7,
+                liked: false
+            },
+            { 
+                id: 205,
+                title: "بحيرة صافية",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 78,
+                rating: 4.0,
+                liked: false
+            },
+            { 
+                id: 206,
+                title: "غابة ضبابية",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 62,
+                rating: 3.8,
+                liked: false
+            },
+            { 
+                id: 207,
+                title: "شلال رائع",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#1abc9c",
+                likes: 105,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 208,
+                title: "غروب الشمس",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e74c3c",
+                likes: 91,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 209,
+                title: "زهور الربيع",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#9b59b6",
+                likes: 84,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 210,
+                title: "غابة الخريف",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1503435980610-a51f3ddfee50?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e67e22",
+                likes: 77,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 211,
+                title: "جبال ثلجية",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 93,
+                rating: 4.4,
+                liked: true
+            },
+            { 
+                id: 212,
+                title: "وادي أخضر",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2ecc71",
+                likes: 87,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 213,
+                title: "صخور ساحلية",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#34495e",
+                likes: 69,
+                rating: 3.9,
+                liked: false
+            },
+            { 
+                id: 214,
+                title: "غابة الصنوبر",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#27ae60",
+                likes: 81,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 215,
+                title: "نهر جبلي",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2980b9",
+                likes: 95,
+                rating: 4.5,
+                liked: true
+            },
+            { 
+                id: 216,
+                title: "واحة صحراوية",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#d35400",
+                likes: 58,
+                rating: 3.7,
+                liked: false
+            },
+            { 
+                id: 217,
+                title: "غروب على البحر",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e74c3c",
+                likes: 102,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 218,
+                title: "ضباب الصباح",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#7f8c8d",
+                likes: 73,
+                rating: 4.0,
+                liked: false
+            },
+            { 
+                id: 219,
+                title: "أشجار معمرة",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#8e44ad",
+                likes: 86,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 220,
+                title: "حديقة زهور",
+                category: "nature",
+                imageUrl: "https://images.unsplash.com/photo-1526397751294-331021109fbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 79,
+                rating: 4.1,
+                liked: false
+            },
+            
+            // Cars Wallpapers (15 items)
+            { 
+                id: 301,
+                title: "سيارة فاخرة",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1494905998402-395d579af36f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 97,
+                rating: 4.4,
+                liked: true
+            },
+            { 
+                id: 302,
+                title: "سيارة رياضية",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#c0392b",
+                likes: 112,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 303,
+                title: "سيارة كلاسيكية",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#d35400",
+                likes: 84,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 304,
+                title: "سيارة سباق",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1514316703785-8af83a33b271?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e74c3c",
+                likes: 107,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 305,
+                title: "سيارة دفع رباعي",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#34495e",
+                likes: 73,
+                rating: 4.0,
+                liked: false
+            },
+            { 
+                id: 306,
+                title: "سيارة كهربائية",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1550355291-bbee04a92027?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 91,
+                rating: 4.4,
+                liked: false
+            },
+            { 
+                id: 307,
+                title: "سيارة عائلية",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1547038577-da80abbc4f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 65,
+                rating: 3.9,
+                liked: false
+            },
+            { 
+                id: 308,
+                title: "سيارة صغيرة",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1549927681-0b673b8243ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f39c12",
+                likes: 58,
+                rating: 3.7,
+                liked: false
+            },
+            { 
+                id: 309,
+                title: "سيارة فاخرة 2023",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#1abc9c",
+                likes: 118,
+                rating: 4.8,
+                liked: true
+            },
+            { 
+                id: 310,
+                title: "سيارة رياضية 2023",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e74c3c",
+                likes: 124,
+                rating: 4.9,
+                liked: true
+            },
+            { 
+                id: 311,
+                title: "سيارة كلاسيكية قديمة",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#d35400",
+                likes: 89,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 312,
+                title: "سيارة سباق حديثة",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#c0392b",
+                likes: 102,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 313,
+                title: "سيارة دفع رباعي كبيرة",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#34495e",
+                likes: 76,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 314,
+                title: "سيارة كهربائية حديثة",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1550355291-bbee04a92027?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 94,
+                rating: 4.5,
+                liked: false
+            },
+            { 
+                id: 315,
+                title: "سيارة عائلية كبيرة",
+                category: "cars",
+                imageUrl: "https://images.unsplash.com/photo-1547038577-da80abbc4f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 67,
+                rating: 3.9,
+                liked: false
+            },
+            
+            // Space Wallpapers (15 items)
+            { 
+                id: 401,
+                title: "سماء ليلية",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
+                color: "#1a1a2e",
+                likes: 112,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 402,
+                title: "المجرة",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#9b59b6",
+                likes: 118,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 403,
+                title: "سديم",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#8e44ad",
+                likes: 127,
+                rating: 4.9,
+                liked: true
+            },
+            { 
+                id: 404,
+                title: "كوكب الأرض",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 143,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 405,
+                title: "القمر",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#bdc3c7",
+                likes: 98,
+                rating: 4.5,
+                liked: false
+            },
+            { 
+                id: 406,
+                title: "المشتري",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e67e22",
+                likes: 87,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 407,
+                title: "المريخ",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#c0392b",
+                likes: 92,
+                rating: 4.4,
+                liked: false
+            },
+            { 
+                id: 408,
+                title: "زحل",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f1c40f",
+                likes: 105,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 409,
+                title: "أورانوس",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#1abc9c",
+                likes: 79,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 410,
+                title: "نبتون",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 83,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 411,
+                title: "الشمس",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f39c12",
+                likes: 117,
+                rating: 4.8,
+                liked: true
+            },
+            { 
+                id: 412,
+                title: "الشفق القطبي",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1518630382442-5407b6792b2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#00BFFF",
+                likes: 167,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 413,
+                title: "نجوم متلألئة",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
+                color: "#1a1a2e",
+                likes: 109,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 414,
+                title: "سوبرنوفا",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#8e44ad",
+                likes: 134,
+                rating: 4.9,
+                liked: true
+            },
+            { 
+                id: 415,
+                title: "ثقب أسود",
+                category: "space",
+                imageUrl: "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#000000",
+                likes: 156,
+                rating: 5.0,
+                liked: true
+            },
+            
+            // Abstract Wallpapers (15 items)
+            { 
+                id: 501,
+                title: "مدينة نيون",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#6a3093",
+                likes: 83,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 502,
+                title: "ألوان متداخلة",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 97,
+                rating: 4.5,
+                liked: true
+            },
+            { 
+                id: 503,
+                title: "أشكال هندسية",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 78,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 504,
+                title: "تدرجات لونية",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#9b59b6",
+                likes: 89,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 505,
+                title: "خطوط متقاطعة",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 72,
+                rating: 4.0,
+                liked: false
+            },
+            { 
+                id: 506,
+                title: "دوائر متداخلة",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 85,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 507,
+                title: "أشكال ثلاثية الأبعاد",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 94,
+                rating: 4.5,
+                liked: true
+            },
+            { 
+                id: 508,
+                title: "تأثيرات ضوئية",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 107,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 509,
+                title: "ألوان مائية",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 81,
+                rating: 4.2,
+                liked: false
+            },
+            { 
+                id: 510,
+                title: "أنماط متكررة",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 76,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 511,
+                title: "تأثيرات دخانية",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 92,
+                rating: 4.4,
+                liked: false
+            },
+            { 
+                id: 512,
+                title: "أشكال سائلة",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 103,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 513,
+                title: "تأثيرات نارية",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 118,
+                rating: 4.8,
+                liked: true
+            },
+            { 
+                id: 514,
+                title: "أشكال متحركة",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 87,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 515,
+                title: "تأثيرات بصرية",
+                category: "abstract",
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 112,
+                rating: 4.7,
+                liked: true
+            },
+            
+            // Animals Wallpapers (10 items)
+            { 
+                id: 601,
+                title: "أسد ملك الغابة",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#d35400",
+                likes: 134,
+                rating: 4.9,
+                liked: true
+            },
+            { 
+                id: 602,
+                title: "نمر بنغالي",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f39c12",
+                likes: 127,
+                rating: 4.8,
+                liked: true
+            },
+            { 
+                id: 603,
+                title: "فهد صياد",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e67e22",
+                likes: 118,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 604,
+                title: "دب قطبي",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 143,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 605,
+                title: "ذئب وحيد",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#34495e",
+                likes: 109,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 606,
+                title: "باندا عملاقة",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 156,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 607,
+                title: "فيل أفريقي",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#7f8c8d",
+                likes: 98,
+                rating: 4.5,
+                liked: false
+            },
+            { 
+                id: 608,
+                title: "زرافة طويلة",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f1c40f",
+                likes: 87,
+                rating: 4.3,
+                liked: false
+            },
+            { 
+                id: 609,
+                title: "قرد شمبانزي",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e67e22",
+                likes: 76,
+                rating: 4.1,
+                liked: false
+            },
+            { 
+                id: 610,
+                title: "تمساح خطير",
+                category: "animals",
+                imageUrl: "https://images.unsplash.com/photo-1550353175-a3611868086b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#27ae60",
+                likes: 92,
+                rating: 4.4,
+                liked: false
+            },
+            
+            // Games Wallpapers (10 items)
+            { 
+                id: 701,
+                title: "لعبة PUBG",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e74c3c",
+                likes: 143,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 702,
+                title: "لعبة Fortnite",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 156,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 703,
+                title: "لعبة Call of Duty",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 134,
+                rating: 4.9,
+                liked: true
+            },
+            { 
+                id: 704,
+                title: "لعبة GTA V",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e67e22",
+                likes: 127,
+                rating: 4.8,
+                liked: true
+            },
+            { 
+                id: 705,
+                title: "لعبة Minecraft",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#27ae60",
+                likes: 118,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 706,
+                title: "لعبة FIFA 23",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 109,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 707,
+                title: "لعبة Assassin's Creed",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 98,
+                rating: 4.5,
+                liked: false
+            },
+            { 
+                id: 708,
+                title: "لعبة Red Dead Redemption",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#c0392b",
+                likes: 112,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 709,
+                title: "لعبة Cyberpunk 2077",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#9b59b6",
+                likes: 107,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 710,
+                title: "لعبة The Witcher",
+                category: "games",
+                imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f39c12",
+                likes: 124,
+                rating: 4.9,
+                liked: true
+            },
+            
+            // Art Wallpapers (10 items)
+            { 
+                id: 801,
+                title: "لوحة الموناليزا",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#8e44ad",
+                likes: 156,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 802,
+                title: "لوحة ليلة النجوم",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 143,
+                rating: 5.0,
+                liked: true
+            },
+            { 
+                id: 803,
+                title: "لوحة الصرخة",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e74c3c",
+                likes: 134,
+                rating: 4.9,
+                liked: true
+            },
+            { 
+                id: 804,
+                title: "لوحة الفتاة ذات القرط اللؤلؤي",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#f1c40f",
+                likes: 127,
+                rating: 4.8,
+                liked: true
+            },
+            { 
+                id: 805,
+                title: "لوحة العشاء الأخير",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#2c3e50",
+                likes: 118,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 806,
+                title: "لوحة ولادة فينوس",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e84393",
+                likes: 109,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 807,
+                title: "لوحة المدرسة الأثينية",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 98,
+                rating: 4.5,
+                liked: false
+            },
+            { 
+                id: 808,
+                title: "لوحة الحرية تقود الشعب",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#e74c3c",
+                likes: 112,
+                rating: 4.7,
+                liked: true
+            },
+            { 
+                id: 809,
+                title: "لوحة الملاك الساقط",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#9b59b6",
+                likes: 107,
+                rating: 4.6,
+                liked: true
+            },
+            { 
+                id: 810,
+                title: "لوحة الحصان الأزرق",
+                category: "art",
+                imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#3498db",
+                likes: 124,
+                rating: 4.9,
+                liked: true
+            },
+            
+            // Premium Wallpapers (10 items) - $1.99 each
+            { 
+                id: 901,
+                title: "منظر خلاب PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#1E90FF",
+                likes: 156,
+                rating: 4.9,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 902,
+                title: "غروب PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#FF4500",
+                likes: 142,
+                rating: 4.8,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 903,
+                title: "مدينة الأحلام PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#483D8B",
+                likes: 128,
+                rating: 4.7,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 904,
+                title: "الشفق القطبي PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1518630382442-5407b6792b2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#00BFFF",
+                likes: 167,
+                rating: 5.0,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 905,
+                title: "غابة سحرية PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#228B22",
+                likes: 134,
+                rating: 4.9,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 906,
+                title: "سماء النجوم PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
+                color: "#1A1A2E",
+                likes: 156,
+                rating: 5.0,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 907,
+                title: "شلال رائع PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#1ABC9C",
+                likes: 143,
+                rating: 5.0,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 908,
+                title: "صحراء ذهبية PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#F39C12",
+                likes: 127,
+                rating: 4.8,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 909,
+                title: "مدينة نيون PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#6A3093",
+                likes: 134,
+                rating: 4.9,
+                liked: true,
+                price: 1.99
+            },
+            { 
+                id: 910,
+                title: "ألوان ساحرة PRO",
+                category: "premium",
+                imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                color: "#E84393",
+                likes: 156,
+                rating: 5.0,
+                liked: true,
+                price: 1.99
+            }
+        ];
+
+        // DOM Elements
+        const wallpaperGrid = document.getElementById('wallpaperGrid');
+        const searchInput = document.getElementById('searchInput');
+        const loader = document.getElementById('loader');
+        const emptyState = document.getElementById('emptyState');
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalClose = document.getElementById('modalClose');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const setWallpaperBtn = document.getElementById('setWallpaperBtn');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const searchToggle = document.getElementById('searchToggle');
+        const searchContainer = document.getElementById('searchContainer');
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const loginBtn = document.getElementById('loginBtn');
+        const proBtnSidebar = document.getElementById('proBtn');
+        const mainContainer = document.getElementById('mainContainer');
+        const categoriesContainer = document.getElementById('categoriesContainer');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const authModal = document.getElementById('authModal');
+        const authClose = document.getElementById('authClose');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const showRegister = document.getElementById('showRegister');
+        const showLogin = document.getElementById('showLogin');
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginFormContainer = document.getElementById('loginFormContainer');
+        const registerFormContainer = document.getElementById('registerFormContainer');
+        const proSubscriptionContainer = document.getElementById('proSubscriptionContainer');
+        const paymentFormContainer = document.getElementById('paymentFormContainer');
+        const subscribeBtn = document.getElementById('subscribeBtn');
+        const paymentForm = document.getElementById('paymentForm');
+        const userProfileSection = document.getElementById('userProfileSection');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const userProBadge = document.getElementById('userProBadge');
+        const loginMenuItem = document.getElementById('loginMenuItem');
+        const logoutMenuItem = document.getElementById('logoutMenuItem');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // State
+        let currentWallpaper = null;
+        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+        let isSearchVisible = false;
+        let isSidebarOpen = false;
+        let currentCategory = 'all';
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
+            name: "حساب المطور",
+            email: "2h7amoda2@gmail.com",
+            isPro: true
+        };
+        let currentView = 'login'; // 'login', 'register', 'pro', 'payment'
+
+        // Initialize
+        function init() {
+            renderWallpapers(wallpapers);
+            setupEventListeners();
+            applyDarkMode();
+            checkAuthState();
+        }
+
+        // Check authentication state
+        function checkAuthState() {
+            if (currentUser) {
+                // User is logged in
+                loginMenuItem.style.display = 'none';
+                logoutMenuItem.style.display = 'block';
+                userProfileSection.style.display = 'block';
+                
+                // Set user info
+                userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+                userName.textContent = currentUser.name;
+                userEmail.textContent = currentUser.email;
+                
+                // Show PRO badge if user has PRO
+                if (currentUser.isPro) {
+                    userProBadge.style.display = 'inline-block';
+                } else {
+                    userProBadge.style.display = 'none';
+                }
+            } else {
+                // User is not logged in
+                loginMenuItem.style.display = 'block';
+                logoutMenuItem.style.display = 'none';
+                userProfileSection.style.display = 'none';
+            }
+        }
+
+        // Render wallpapers
+        function renderWallpapers(wallpapersToRender) {
+            if (wallpapersToRender.length === 0) {
+                emptyState.style.display = 'block';
+                wallpaperGrid.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            wallpaperGrid.style.display = 'grid';
+            wallpaperGrid.innerHTML = '';
+
+            // Filter by category if not 'all'
+            let filteredWallpapers = currentCategory === 'all' 
+                ? wallpapersToRender 
+                : wallpapersToRender.filter(w => w.category === currentCategory);
+
+            // Hide premium wallpapers if user is not PRO
+            if (!currentUser?.isPro) {
+                filteredWallpapers = filteredWallpapers.filter(w => w.category !== 'premium');
+            }
+
+            filteredWallpapers.forEach((wallpaper, index) => {
+                const wallpaperElement = document.createElement('div');
+                wallpaperElement.className = 'wallpaper-item';
+                wallpaperElement.style.animationDelay = `${index * 0.1}s`;
+                
+                // Add pro-feature class for premium wallpapers
+                const isProWallpaper = wallpaper.category === 'premium';
+                if (isProWallpaper) {
+                    wallpaperElement.classList.add('pro-feature');
+                }
+                
+                // Render rating stars
+                const ratingStars = [];
+                const fullStars = Math.floor(wallpaper.rating);
+                const hasHalfStar = wallpaper.rating % 1 >= 0.5;
+                
+                for (let i = 0; i < 5; i++) {
+                    if (i < fullStars) {
+                        ratingStars.push('<span class="rating-star">★</span>');
+                    } else if (i === fullStars && hasHalfStar) {
+                        ratingStars.push('<span class="rating-star">☆</span>');
+                    } else {
+                        ratingStars.push('<span class="rating-star">☆</span>');
+                    }
+                }
+                
+                wallpaperElement.innerHTML = `
+                    <img src="${wallpaper.imageUrl}" 
+                         class="wallpaper-img" 
+                         alt="${wallpaper.title}"
+                         loading="lazy"
+                         onload="this.classList.add('loaded')">
+                    <div class="wallpaper-overlay">
+                        <div class="wallpaper-title">${wallpaper.title}</div>
+                        <div class="wallpaper-category">${wallpaper.category}${isProWallpaper ? ' (PRO)' : ''}</div>
+                        ${isProWallpaper ? `<div class="wallpaper-price">$${wallpaper.price}</div>` : ''}
+                        <div class="rating-container">
+                            ${ratingStars.join('')}
+                            <span style="margin-right: 5px; font-size: 11px;">(${wallpaper.rating.toFixed(1)})</span>
+                        </div>
+                    </div>
+                    <div class="wallpaper-actions">
+                        <button class="action-btn like-btn ${wallpaper.liked ? 'liked' : ''}" onclick="toggleLike(${wallpaper.id}, event)">
+                            ♥
+                        </button>
+                        <button class="action-btn ${isProWallpaper ? 'pro-action-btn' : ''}" onclick="downloadWallpaper(${wallpaper.id}, event)">⬇</button>
+                        <button class="action-btn ${isProWallpaper ? 'pro-action-btn' : ''}" onclick="setAsWallpaper(${wallpaper.id}, event)">🖼️</button>
+                    </div>
+                `;
+
+                wallpaperElement.addEventListener('click', (e) => {
+                    // Don't open modal if clicking on action buttons
+                    if (e.target.closest('.wallpaper-actions')) {
+                        return;
+                    }
+                    
+                    if (isProWallpaper && !currentUser?.isPro) {
+                        showNotification('هذه الخلفية متاحة للمشتركين المميزين فقط', true);
+                        openProSubscription();
+                    } else {
+                        openModal(wallpaper);
+                    }
+                });
+                wallpaperGrid.appendChild(wallpaperElement);
+            });
+        }
+
+        // Toggle like for wallpaper
+        function toggleLike(id, event) {
+            if (event) event.stopPropagation();
+            
+            const wallpaper = wallpapers.find(w => w.id === id);
+            if (!wallpaper) return;
+            
+            // Toggle like status
+            wallpaper.liked = !wallpaper.liked;
+            
+            // Update like count
+            if (wallpaper.liked) {
+                wallpaper.likes++;
+            } else {
+                wallpaper.likes--;
+            }
+            
+            // Update the UI
+            const likeBtn = event.target.closest('.like-btn');
+            if (likeBtn) {
+                likeBtn.classList.toggle('liked');
+            }
+            
+            // Show notification
+            showNotification(wallpaper.liked ? 'تمت إضافة الإعجاب!' : 'تم إزالة الإعجاب');
+        }
+
+        // Open modal with wallpaper
+        function openModal(wallpaper) {
+            currentWallpaper = wallpaper;
+            modalImg.src = wallpaper.imageUrl;
+            modalTitle.textContent = wallpaper.title;
+            
+            // Show price if it's a premium wallpaper
+            if (wallpaper.category === 'premium') {
+                modalPrice.textContent = `السعر: $${wallpaper.price}`;
+                modalPrice.style.display = 'block';
+            } else {
+                modalPrice.style.display = 'none';
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Open auth modal
+        function openAuthModal(view = 'login') {
+            currentView = view;
+            updateAuthView();
+            authModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close auth modal
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Open PRO subscription view
+        function openProSubscription() {
+            if (!currentUser) {
+                openAuthModal('login');
+                showNotification('الرجاء تسجيل الدخول أولاً للاشتراك في الخطة المميزة', true);
+                return;
+            }
+            
+            currentView = 'pro';
+            updateAuthView();
+            authModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Open payment form
+        function openPaymentForm() {
+            currentView = 'payment';
+            updateAuthView();
+        }
+
+        // Update auth modal view
+        function updateAuthView() {
+            // Update tabs
+            loginTab.classList.remove('active');
+            registerTab.classList.remove('active');
+            
+            // Hide all containers
+            loginFormContainer.style.display = 'none';
+            registerFormContainer.style.display = 'none';
+            proSubscriptionContainer.style.display = 'none';
+            paymentFormContainer.style.display = 'none';
+            
+            // Show the current view
+            if (currentView === 'login') {
+                loginTab.classList.add('active');
+                loginFormContainer.style.display = 'block';
+            } else if (currentView === 'register') {
+                registerTab.classList.add('active');
+                registerFormContainer.style.display = 'block';
+            } else if (currentView === 'pro') {
+                proSubscriptionContainer.style.display = 'block';
+            } else if (currentView === 'payment') {
+                proSubscriptionContainer.style.display = 'block';
+                paymentFormContainer.style.display = 'block';
+            }
+        }
+
+        // Toggle sidebar
+        function toggleSidebar() {
+            isSidebarOpen = !isSidebarOpen;
+            
+            if (isSidebarOpen) {
+                sidebar.classList.add('active');
+                sidebarOverlay.classList.add('active');
+                mainContainer.classList.add('sidebar-active');
+                menuBtn.classList.add('active');
+            } else {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                mainContainer.classList.remove('sidebar-active');
+                menuBtn.classList.remove('active');
+            }
+        }
+
+        // Set active category
+        function setActiveCategory(category) {
+            if (category === 'premium' && !currentUser?.isPro) {
+                showNotification('هذه الفئة متاحة للمشتركين المميزين فقط', true);
+                openProSubscription();
+                return;
+            }
+            
+            currentCategory = category;
+            categoryBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+            renderWallpapers(wallpapers);
+        }
+
+        // Download wallpaper
+        function downloadWallpaper(id, event) {
+            if (event) event.stopPropagation();
+            const wallpaper = wallpapers.find(w => w.id === id);
+            if (!wallpaper) return;
+
+            // Check if PRO is required
+            if (wallpaper.category === 'premium' && !currentUser?.isPro) {
+                showNotification('تحميل الخلفيات المميزة يتطلب اشتراك PRO', true);
+                openProSubscription();
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = wallpaper.imageUrl;
+            link.download = `wallify-${wallpaper.title.replace(/\s+/g, '-')}-${id}.jpg`;
+            link.click();
+
+            showNotification('جاري تحميل الخلفية...');
+        }
+
+        // Set as wallpaper
+        function setAsWallpaper(id, event) {
+            if (event) event.stopPropagation();
+            const wallpaper = wallpapers.find(w => w.id === id);
+            
+            // Check if PRO is required
+            if (wallpaper.category === 'premium' && !currentUser?.isPro) {
+                showNotification('تعيين الخلفيات المميزة يتطلب اشتراك PRO', true);
+                openProSubscription();
+                return;
+            }
+            
+            showNotification('هذه الميزة متاحة في تطبيق الهاتف فقط');
+        }
+
+        // Search wallpapers
+        function searchWallpapers(query) {
+            const filtered = wallpapers.filter(wallpaper => 
+                wallpaper.title.toLowerCase().includes(query.toLowerCase()) ||
+                wallpaper.category.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            renderWallpapers(filtered);
+        }
+
+        // Show notification
+        function showNotification(message, isPro = false) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${isPro ? 'pro-notification' : ''}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('darkMode', isDarkMode);
+            applyDarkMode();
+        }
+
+        // Apply dark mode
+        function applyDarkMode() {
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-mode');
+                darkModeToggle.textContent = '🌙';
+            }
+        }
+
+        // Toggle search visibility
+        function toggleSearch() {
+            isSearchVisible = !isSearchVisible;
+            if (isSearchVisible) {
+                searchContainer.style.display = 'block';
+                searchInput.focus();
+            } else {
+                searchContainer.style.display = 'none';
+                searchInput.value = '';
+                searchWallpapers('');
+            }
+        }
+
+        // Handle login
+        function handleLogin(email, password) {
+            // In a real app, you would send this to your backend
+            // For demo purposes, we'll just simulate a successful login
+            
+            // Simple validation
+            if (!email || !password) {
+                showNotification('الرجاء إدخال البريد الإلكتروني وكلمة المرور');
+                return;
+            }
+            
+            // Check if user exists in localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (!user) {
+                showNotification('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+                return;
+            }
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Update current user
+                currentUser = {
+                    name: user.name,
+                    email: user.email,
+                    isPro: user.isPro || false
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update UI
+                checkAuthState();
+                closeAuthModal();
+                showNotification(`مرحباً ${user.name}! تم تسجيل الدخول بنجاح`);
+                
+                // Reset form
+                loginForm.reset();
+                
+                // Reload wallpapers to show/hide premium content
+                renderWallpapers(wallpapers);
+            }, 1000);
+        }
+
+        // Handle registration
+        function handleRegister(name, email, password, confirmPassword) {
+            // Validation
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification('الرجاء ملء جميع الحقول');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showNotification('كلمة المرور غير متطابقة');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showNotification('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+                return;
+            }
+            
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userExists = users.some(u => u.email === email);
+            
+            if (userExists) {
+                showNotification('هذا البريد الإلكتروني مسجل بالفعل');
+                return;
+            }
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Create new user
+                const newUser = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    isPro: false
+                };
+                
+                // Save to localStorage
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Log in the new user
+                currentUser = newUser;
+                localStorage.setItem('currentUser', JSON.stringify(newUser));
+                
+                // Update UI
+                checkAuthState();
+                showNotification(`مرحباً ${name}! تم إنشاء حسابك بنجاح`);
+                
+                // Switch to login view
+                currentView = 'login';
+                updateAuthView();
+                
+                // Reset form
+                registerForm.reset();
+                
+                // Close modal after delay
+                setTimeout(() => {
+                    closeAuthModal();
+                }, 1500);
+            }, 1000);
+        }
+
+        // Handle PRO subscription
+        function handleSubscribe() {
+            if (!currentUser) {
+                showNotification('الرجاء تسجيل الدخول أولاً');
+                return;
+            }
+            
+            // Show payment form
+            openPaymentForm();
+        }
+
+        // Handle payment
+        function handlePayment(cardNumber, cardExpiry, cardCvc, cardName) {
+            // Validate card details
+            if (!cardNumber || !cardExpiry || !cardCvc || !cardName) {
+                showNotification('الرجاء ملء جميع تفاصيل البطاقة');
+                return;
+            }
+            
+            if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, ''))) {
+                showNotification('رقم البطاقة غير صحيح');
+                return;
+            }
+            
+            if (!/^\d{2}\/\d{2}$/.test(cardExpiry)) {
+                showNotification('تاريخ الانتهاء غير صحيح (استخدم MM/YY)');
+                return;
+            }
+            
+            if (!/^\d{3,4}$/.test(cardCvc)) {
+                showNotification('رمز الأمان غير صحيح');
+                return;
+            }
+            
+            // Simulate payment processing
+            showNotification('جاري معالجة طلب الاشتراك...', true);
+            
+            setTimeout(() => {
+                // Update user to PRO
+                currentUser.isPro = true;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update all users data
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                if (userIndex !== -1) {
+                    users[userIndex].isPro = true;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                // Update UI
+                checkAuthState();
+                showNotification('تم ترقية حسابك إلى PRO بنجاح!', true);
+                closeAuthModal();
+                
+                // Reload wallpapers to show premium content
+                renderWallpapers(wallpapers);
+            }, 2000);
+        }
+
+        // Handle logout
+        function handleLogout() {
+            // Clear user data
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            
+            // Update UI
+            checkAuthState();
+            showNotification('تم تسجيل الخروج بنجاح');
+            
+            // Close sidebar if open
+            if (isSidebarOpen) {
+                toggleSidebar();
+            }
+            
+            // Reload wallpapers to hide premium content
+            renderWallpapers(wallpapers);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search input
+            searchInput.addEventListener('input', (e) => {
+                searchWallpapers(e.target.value);
+            });
+
+            // Modal close
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            // Download button in modal
+            downloadBtn.addEventListener('click', () => {
+                if (currentWallpaper) downloadWallpaper(currentWallpaper.id);
+            });
+
+            // Set wallpaper button in modal
+            setWallpaperBtn.addEventListener('click', () => {
+                if (currentWallpaper) setAsWallpaper(currentWallpaper.id);
+            });
+
+            // Scroll to top button
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Show/hide scroll to top button
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+
+            // Dark mode toggle
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+
+            // Search toggle
+            searchToggle.addEventListener('click', toggleSearch);
+
+            // Close search when clicking outside
+            document.addEventListener('click', (e) => {
+                if (isSearchVisible && 
+                    !searchContainer.contains(e.target) && 
+                    e.target !== searchToggle) {
+                    toggleSearch();
+                }
+            });
+
+            // Menu button for sidebar
+            menuBtn.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+
+            // Login button in sidebar
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleSidebar();
+                openAuthModal('login');
+            });
+
+            // PRO button in sidebar
+            proBtnSidebar.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleSidebar();
+                openProSubscription();
+            });
+
+            // Category buttons
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setActiveCategory(btn.dataset.category);
+                });
+            });
+            
+            // Auth modal close
+            authClose.addEventListener('click', closeAuthModal);
+            authModal.addEventListener('click', (e) => {
+                if (e.target === authModal) closeAuthModal();
+            });
+            
+            // Login form submit
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                handleLogin(email, password);
+            });
+            
+            // Register form submit
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                handleRegister(name, email, password, confirmPassword);
+            });
+            
+            // Show register form
+            showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentView = 'register';
+                updateAuthView();
+            });
+            
+            // Show login form
+            showLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentView = 'login';
+                updateAuthView();
+            });
+            
+            // Login/Register tabs
+            loginTab.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentView = 'login';
+                updateAuthView();
+            });
+            
+            registerTab.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentView = 'register';
+                updateAuthView();
+            });
+            
+            // Subscribe button
+            subscribeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleSubscribe();
+            });
+            
+            // Payment form submit
+            paymentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const cardNumber = document.getElementById('cardNumber').value;
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCvc = document.getElementById('cardCvc').value;
+                const cardName = document.getElementById('cardName').value;
+                handlePayment(cardNumber, cardExpiry, cardCvc, cardName);
+            });
+            
+            // Logout button
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleLogout();
+            });
+        }
+
+        // Initialize the app
+        init();
+        
+        // Make functions available globally for HTML onclick attributes
+        window.downloadWallpaper = downloadWallpaper;
+        window.setAsWallpaper = setAsWallpaper;
+        window.toggleLike = toggleLike;
+    </script>
+</body>
+</html>
